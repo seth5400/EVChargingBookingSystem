@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="/image/logo1.png">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <%- include('nav', { user: user }) %>
+
+    <div class="ctn-profile">
+        <button onclick="topFunction()" id="btn-back" title="Go to top">
+            <img src="/image/arrow.png" alt="">
+        </button>
+        <div class="box-profile">
+            <p>MY PROFILE</p>
+            <div class="border-bt"></div>
+        </div>
+        <div class="user-pro" style="height: 400px;">
+            <div class="img">
+                <img src="/image/logo1.png" alt="logo">
+            </div>
+            <p>Name : <%= user.username %></p>
+            <p>role : <%= user.role === 'admin' ? 'Admin' : 'General User' %></p>
+            <a class="a1" href="/edit-profile">EDIT</a>
+
+        </div>
+
+        
+
+
+        
+
+
+    </div>
+
+    <div class="popup-feedback">
+        <div id="feedback-popup" class="popup">
+            <div class="popup-content">
+                <span class="close-popup" id="close-popup">&times;</span>
+                <h2>Submit Feedback</h2>
+                <form id="feedback-form" action="/feedback" method="POST">
+                    <label for="stationId">Select Charging Station:</label>
+                    <select name="stationId" id="stationId" required>
+                        <% products.forEach(product => { %>
+                            <option value="<%= product._id %>"><%= product.charge_code %></option>
+                        <% }) %>
+                    </select>
+                    <br>
+                    <label for="issueType">Select Issue:</label>
+                    <select name="issueType" id="issueType" required>
+                        <option value="Station Faulty">Station Faulty</option>
+                        <option value="Charging Issue">Charging Issue</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <br>
+                    <label for="message">Describe the Issue:</label>
+                    <textarea name="message" id="message" rows="5" required></textarea>
+                    <br>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery Script -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // เปิด popup เมื่อคลิกปุ่ม feedback
+            $('#feedback-link').click(function () {
+                $('#feedback-popup').css('display', 'flex');
+            });
+    
+            // ปิด popup เมื่อคลิกที่ปุ่มปิด
+            $('#close-popup').click(function () {
+                $('#feedback-popup').css('display', 'none');
+            });
+    
+            // ปิด popup เมื่อคลิกนอก popup
+            $(window).click(function (event) {
+                if (event.target.id === 'feedback-popup') {
+                    $('#feedback-popup').css('display', 'none');
+                }
+            });
+    
+            // ส่งฟอร์ม feedback ผ่าน AJAX
+            $('#feedback-form').submit(function (event) {
+                event.preventDefault(); // ป้องกันการ submit แบบธรรมดา
+                const formData = $(this).serialize(); // เก็บข้อมูลฟอร์ม
+    
+                $.post('/feedback', formData, function (response) {
+                    if (response.success) {
+                        alert('Feedback submitted successfully');
+                        $('#feedback-popup').css('display', 'none');
+                    } else {
+                        alert('Failed to submit feedback');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+
+        const inputs = document.querySelectorAll(".input");
+
+
+        function addcl() {
+            let parent = this.parentNode.parentNode;
+            parent.classList.add("focus");
+        }
+
+        function remcl() {
+            let parent = this.parentNode.parentNode;
+            if (this.value == "") {
+                parent.classList.remove("focus");
+            }
+        }
+
+
+        inputs.forEach(input => {
+            input.addEventListener("focus", addcl);
+            input.addEventListener("blur", remcl);
+        });
+
+        // Get the button
+        let mybutton = document.getElementById("btn-back");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+
+        
+    </script>
+    
+
+</body>
+
+</html>

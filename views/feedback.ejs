@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Feedback</title>
+</head>
+<body>
+    <h1>Submit Feedback</h1>
+    <form action="/feedback" method="POST">
+        <label for="station">Select Charging Station:</label>
+        <select name="stationId" id="stationId" required>
+            <% products.forEach(product => { %>
+                <option value="<%= product._id %>"><%= product.charge_code %></option>
+            <% }) %>
+        </select>
+        <br>
+        <label for="issueType">Select Issue:</label>
+        <select name="issueType" id="issueType" required>
+            <option value="Station Faulty">Station Faulty</option>
+            <option value="Charging Issue">Charging Issue</option>
+            <option value="Other">Other</option>
+        </select>
+        <br>
+        <label for="message">Describe the Issue:</label>
+        <textarea name="message" id="message" rows="5" required></textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    
+</body>
+</html>

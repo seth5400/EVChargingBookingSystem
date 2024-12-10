@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Page</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="./image/logo1.png">
+    <style>
+        .content-pop {
+
+
+            .login-content {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                text-align: center;
+                margin-top: 1.8rem;
+            }
+
+
+
+            form {
+                width: 100%;
+            }
+
+            .login-content img {
+                height: 100px;
+            }
+
+            .login-content h2 {
+                margin: 15px 0;
+                color: #333;
+                text-transform: uppercase;
+                font-size: 2.9rem;
+            }
+
+            .login-content .input-div {
+                position: relative;
+                display: grid;
+                grid-template-columns: 7% 93%;
+                margin: 25px 0;
+                padding: 5px 0;
+                border-bottom: 2px solid #d9d9d9;
+            }
+
+            .login-content .input-div.one {
+                margin-top: 0;
+            }
+
+            .i {
+                color: #d9d9d9;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .i i {
+                transition: .3s;
+            }
+
+            .input-div>div {
+                position: relative;
+                height: 45px;
+            }
+
+            .input-div>div>h5 {
+                position: absolute;
+                left: -30px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #999;
+                font-size: 18px;
+                transition: .3s;
+            }
+
+            .input-div:before,
+            .input-div:after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                width: 0%;
+                height: 2px;
+                background-color: #80B334;
+                transition: .4s;
+            }
+
+            .input-div:before {
+                right: 50%;
+            }
+
+            .input-div:after {
+                left: 50%;
+            }
+
+            .input-div.focus:before,
+            .input-div.focus:after {
+                width: 50%;
+            }
+
+            .input-div.focus>div>h5 {
+                top: -5px;
+                font-size: 15px;
+            }
+
+            .input-div.focus>.i>i {
+                color: #80B334;
+            }
+
+            .input-div>div>input {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                outline: none;
+                background: none;
+                padding: 0.5rem 0.7rem;
+                font-size: 1.2rem;
+                color: #555;
+                font-family: 'poppins', sans-serif;
+            }
+
+            .input-div.pass {
+                margin-bottom: 4px;
+            }
+
+            a {
+                display: block;
+                text-align: right;
+                text-decoration: none;
+                color: #999;
+                font-size: 0.9rem;
+                transition: .3s;
+            }
+
+            a:hover {
+                color: #80B334;
+            }
+
+            .btn {
+                display: block;
+                width: 100%;
+                height: 50px;
+                border-radius: 25px;
+                outline: none;
+                border: none;
+                background-color: #80B334;
+                background-size: 200%;
+                font-size: 1.2rem;
+                color: #fff;
+                font-family: 'Poppins', sans-serif;
+                text-transform: uppercase;
+                /*margin: 1rem 0;*/
+                margin-top: 1.5rem;
+                cursor: pointer;
+                transition: .5s;
+            }
+
+            .btn:hover {
+                background-position: right;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <a href="" class="logo">
+            <img src="./image/logo1.png" alt="">
+        </a>
+
+        <input type="checkbox" id="check">
+        <label for="check" class="icons">
+            <i class='bx bx-menu' id="menu-icon"></i>
+            <i class='bx bx-x' id="close-icon"></i>
+        </label>
+
+        <nav class="navbar">
+            <a href="" style="--i:0;">HOME</a>
+            <a href="" style="--i:1;">SERVICE</a>
+            <a href="" style="--i:1;">MANAGE</a>
+            <a href="" style="--i:2;">HISTORY</a>
+            <a href="" style="--i:3;">HELP</a>
+            <a href="" style="--i:4;" id="user">Sign in</a>
+
+        </nav>
+        <a href="" class="user">Sign in</a>
+
+
+    </header>
+
+    <div class="ctn-manage">
+        <button onclick="topFunction()" id="btn-back" title="Go to top">
+            <img src="./image/arrow.png" alt="">
+        </button>
+
+        <div class="box-manage">
+            <p>MANAGE SYSTEM</p>
+            <div class="border-bt"></div>
+        </div>
+        <div class="add-item">
+            <a href="#" id="open-popup">ADD ITEM</a>
+        </div>
+
+        <!-- Popup add item-->
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close" id="close-popup">&times;</span>
+                <h2>INSERT CHARGER</h2>
+                <div class="content-pop">
+                    <div class="login-content">
+
+                        <form action="index.html">
+
+
+                            <div class="input-div one">
+                                <div class="i">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="div">
+                                    <h5>CHARGER CODE</h5>
+                                    <input type="text" class="input">
+                                </div>
+                            </div>
+                            <div class="input-div pass">
+                                <div class="i">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="div">
+                                    <h5>CONNECTOR TYPES</h5>
+                                    <input type="text" class="input">
+                                </div>
+                            </div>
+                            <div class="input-div pass">
+                                <div class="i">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="div">
+                                    <h5>DETAILS</h5>
+                                    <input type="text" class="input">
+                                </div>
+                            </div>
+
+
+                            <input type="submit" class="btn" value="ADD ITEM">
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- Popup edit -->
+        <div id="popup1" class="popup">
+            <div class="popup-content">
+                <span class="close" id="close-popup1">&times;</span>
+                <h2>EDIT CHARGER</h2>
+                <div class="content-pop">
+                    <div class="login-content">
+
+                        <form action="index.html">
+
+
+                            <div class="input-div one">
+                                <div class="i">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="div">
+                                    <h5>CHARGER CODE</h5>
+                                    <input type="text" class="input">
+                                </div>
+                            </div>
+                            <div class="input-div pass">
+                                <div class="i">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="div">
+                                    <h5>CONNECTOR TYPES</h5>
+                                    <input type="text" class="input">
+                                </div>
+                            </div>
+                            <div class="input-div pass">
+                                <div class="i">
+                                    <i class="fas fa-lock"></i>
+                                </div>
+                                <div class="div">
+                                    <h5>DETAILS</h5>
+                                    <input type="text" class="input">
+                                </div>
+                            </div>
+
+
+                            <input type="submit" class="btn" value="SAVE">
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="table_manage">
+
+            <table class="">
+                <thead>
+                    <th>CHARGER CODE</th>
+                    <th>STATUS</th>
+                    <th>CONNECTOR TYPES</th>
+                    <th>DETAILS</th>
+                    <th>MANAGE</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>0001</th>
+                        <th class="available">
+                            <p>Available</p>
+                        </th>
+                        <th>DC CSS COMBO 2</th>
+                        <th>Maximum 120 kW</th>
+                        <th>
+                            <a id="open-popup1" href="#" class="edt">EDIT</a>
+                            <a href="" class="dlt">DELETE</a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>0001</th>
+                        <th class="booked">
+                            <p>Booked</p>
+                        </th>
+                        <th>DC CSS COMBO 2</th>
+                        <th>Maximum 120 kW</th>
+                        <th>
+                            <a href="" class="edt">EDIT</a>
+                            <a href="" class="dlt">DELETE</a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>0001</th>
+                        <th class="inUse">
+                            <p>In Use</p>
+                        </th>
+                        <th>DC CSS COMBO 2</th>
+                        <th>Maximum 120 kW</th>
+                        <th>
+                            <a id="open-popup1" href="#" class="edt">EDIT</a>
+                            <a href="" class="dlt">DELETE</a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>0001</th>
+                        <th class="inUse">
+                            <p>In Use</p>
+                        </th>
+                        <th>DC CSS COMBO 2</th>
+                        <th>Maximum 120 kW</th>
+                        <th>
+                            <a href="" class="edt">EDIT</a>
+                            <a href="" class="dlt">DELETE</a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>0001</th>
+                        <th class="inUse">
+                            <p>In Use</p>
+                        </th>
+                        <th>DC CSS COMBO 2</th>
+                        <th>Maximum 120 kW</th>
+                        <th>
+                            <a href="" class="edt">EDIT</a>
+                            <a href="" class="dlt">DELETE</a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>0001</th>
+                        <th class="inUse">
+                            <p>In Use</p>
+                        </th>
+                        <th>DC CSS COMBO 2</th>
+                        <th>Maximum 120 kW</th>
+                        <th>
+                            <a href="" class="edt">EDIT</a>
+                            <a href="" class="dlt">DELETE</a>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>0001</th>
+                        <th class="inUse">
+                            <p>In Use</p>
+                        </th>
+                        <th>DC CSS COMBO 2</th>
+                        <th>Maximum 120 kW</th>
+                        <th>
+                            <a href="" class="edt">EDIT</a>
+                            <a href="" class="dlt">DELETE</a>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="box-manage">
+            <p>USAGE HISTORY</p>
+            <div class="border-bt"></div>
+        </div>
+
+        <div class="table_manage">
+            <table class="">
+                <thead>
+                    <th>CHARGER CODE</th>
+                    <th>CUSTOMER</th>
+                    <th>STATUS</th>
+                    <th>TIME</th>
+                    <th>CONNECTOR TYPES</th>
+                    <th>DETAILS</th>
+
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>0001</th>
+                        <th>Jonathan</th>
+                        <th class="finish">
+                            <p>Finish</p>
+                        </th>
+                        <th>-</th>
+                        <th>DC CSS COMBO 2</th>
+                        <th>Maximum 120 kW</th>
+
+                    </tr>
+                    <tr>
+                        <th>0001</th>
+                        <th>Jonathan</th>
+                        <th class="cancel">
+                            <p>Cancel</p>
+                        </th>
+                        <th>-</th>
+                        <th>DC CSS COMBO 2</th>
+                        <th>Maximum 120 kW</th>
+
+                    </tr>
+                    <tr>
+                        <th>0001</th>
+                        <th>Jonathan</th>
+                        <th class="booked">
+                            <p>Booked</p>
+                        </th>
+                        <th>-</th>
+                        <th>DC CSS COMBO 2</th>
+                        <th>Maximum 120 kW</th>
+
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("btn-back");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+
+        //--------------------- ADD ITEM--------------
+        // เปิด popup เมื่อคลิกที่ปุ่ม
+        document.getElementById("open-popup").onclick = function (event) {
+            event.preventDefault(); // ป้องกันไม่ให้ลิงค์ทำงาน
+            document.getElementById("popup").style.display = "block"; // แสดง popup
+        }
+
+        // ปิด popup เมื่อคลิกที่ปุ่มปิด
+        document.getElementById("close-popup").onclick = function () {
+            document.getElementById("popup").style.display = "none"; // ซ่อน popup
+        }
+
+        // ปิด popup เมื่อคลิกนอกพื้นที่ popup
+        window.onclick = function (event) {
+            const popup = document.getElementById("popup");
+            if (event.target == popup) {
+                popup.style.display = "none"; // ซ่อน popup
+            }
+        }
+
+        //--------------------- EDIT --------------
+        // เปิด popup เมื่อคลิกที่ปุ่ม
+        document.getElementById("open-popup1").onclick = function (event) {
+            event.preventDefault(); // ป้องกันไม่ให้ลิงค์ทำงาน
+            document.getElementById("popup1").style.display = "block"; // แสดง popup
+        }
+
+        // ปิด popup เมื่อคลิกที่ปุ่มปิด
+        document.getElementById("close-popup1").onclick = function () {
+            document.getElementById("popup1").style.display = "none"; // ซ่อน popup
+        }
+
+        // ปิด popup เมื่อคลิกนอกพื้นที่ popup
+        window.onclick = function (event) {
+            const popup1 = document.getElementById("popup1");
+            if (event.target == popup1) {
+                popup1.style.display = "none"; // ซ่อน popup
+            }
+        }
+
+
+        // ข้างใน popup
+        const inputs = document.querySelectorAll(".input");
+
+
+        function addcl() {
+            let parent = this.parentNode.parentNode;
+            parent.classList.add("focus");
+        }
+
+        function remcl() {
+            let parent = this.parentNode.parentNode;
+            if (this.value == "") {
+                parent.classList.remove("focus");
+            }
+        }
+
+
+        inputs.forEach(input => {
+            input.addEventListener("focus", addcl);
+            input.addEventListener("blur", remcl);
+        });
+    </script>
+</body>
+
+</html>

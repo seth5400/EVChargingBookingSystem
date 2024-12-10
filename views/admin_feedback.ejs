@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Feedback Reports</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="/image/logo1.png">
+</head>
+
+<body>
+    <%- include('nav', { user: user }) %>
+
+    <div class="ctn-ad-feedback">
+        <button onclick="topFunction()" id="btn-back" title="Go to top">
+            <img src="/image/arrow.png" alt="">
+        </button>
+        <div class="box-manage">
+            <p>Manage User Feedback</p>
+            <div class="border-bt"></div>
+        </div>
+        <div class="table_manage">
+            <table>
+                <thead>
+                    <tr>
+                        <th>CUSTOMER</th>
+                        <th>CHARGER CODE</th>
+                        <th>ISSUE TYPE</th>
+                        <th>MESSAGE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% feedbacks.forEach(feedback => { %>
+                        <tr>
+                            <th>
+                                <%= feedback.userId.username %>
+                            </th>
+                            <th>
+                                <% if (feedback.stationId) { %>
+                                    <%= feedback.stationId.charge_code %>
+                                <% } else { %>
+                                    <span class="text-danger">Deleted Station</span>
+                                <% } %>
+                            </th>
+                            <th>
+                                <%= feedback.issueType %>
+                            </th>
+                            <th>
+                                <%= feedback.message %>
+                            </th>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Scroll to top button functionality
+        let mybutton = document.getElementById("btn-back");
+
+        window.onscroll = function () {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        };
+
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+    
+</body>
+
+</html>

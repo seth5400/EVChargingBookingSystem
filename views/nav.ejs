@@ -1,0 +1,79 @@
+<header class="header">
+    <a href="/" class="logo">
+        <img src="./image/logo1.png" alt="">
+    </a>
+
+    <input type="checkbox" id="check">
+    <label for="check" class="icons">
+        <i class='bx bx-menu' id="menu-icon"></i>
+        <i class='bx bx-x' id="close-icon"></i>
+    </label>
+
+    <% if (user && user.role==='user' ) { %>
+        <nav class="navbar">
+            <a href="/" style="--i:0;">HOME</a>
+            <a href="/booking" style="--i:1;">SERVICE</a>
+            <a href="/mybooking" style="--i:2;">HISTORY</a>
+            <!-- <a href="/feedback" style="--i:3;">REPORT SERVICE</a> -->
+            <!-- <a href="" style="--i:3;">HELP</a> -->
+            <a href="/login" style="--i:4;" id="user">Sign in</a>
+
+        </nav>
+        <div class="dropdown">
+            <a href="/profile" class="user"><%= user.username %></a>
+            <div class="dropdown-content">
+
+                <a href="/profile">PROFILE</a>
+                <a href="/edit-profile">EDIT ROFILE</a>
+                <a href="javascript:void(0)" id="feedback-link" style="--i:2;">FEEDBACK SERVICE</a>
+                <a href="/logout">LOGOUT</a>
+
+
+            </div>
+        </div>
+        <% } %>
+            <% if (user && user.role==='admin' ) { %>
+                <nav class="navbar">
+                    <a href="/" style="--i:0;">HOME</a>
+                    <a href="/manage" style="--i:1;">MANAGE</a>
+                    <a href="/adminfeedback" style="--i:2;">FEEDBACK SERVICE</a>
+                    <a href="/report" style="--i:2;">REPORT</a>
+                    <!-- <a href="/mybooking" style="--i:2;">HISTORY</a> -->
+                    <!-- <a href="" style="--i:3;">HELP</a> -->
+                    <a href="/login" style="--i:4;" id="user">Sign in</a>
+                    
+                </nav>
+                <div class="dropdown">
+                    <a href="/profile" class="user"><%= user.username %></a>
+                    <div class="dropdown-content">
+
+                        <a href="/profile">PROFILE</a>
+                        <a href="/edit-profile">EDIT ROFILE</a>
+                        <a href="/logout">LOGOUT</a>
+
+
+                    </div>
+                </div>
+                <% } %>
+                    <% if (!user) { %>
+                        <nav class="navbar">
+                            <a href="/" style="--i:0;">HOME</a>
+                            <a href="/booking" style="--i:1;">SERVICE</a>
+                            <a href="/mybooking" style="--i:2;">HISTORY</a>
+                            <!-- <a href="" style="--i:3;">HELP</a> -->
+                            <a href="/login" style="--i:4;" id="user">Sign in</a>
+
+                        </nav>
+                        <div class="dropdown">
+                            <a href="/login" class="user">Sign in</a>
+                            <div class="dropdown-content">
+
+                                <a href="/login">Login</a>
+                                <a href="/register">Register</a>
+
+
+                            </div>
+                        </div>
+                        <% } %>
+
+</header>

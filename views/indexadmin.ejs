@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charging Station</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="/image/logo1.png">
+</head>
+
+<body>
+    <%- include('nav') %>
+
+    <div class="ctn-booking">
+        <button onclick="topFunction()" id="btn-back" title="Go to top">
+            <img src="/image/arrow.png" alt="">
+        </button>
+        <div class="box-booking">
+            <p>CHARGING STATION</p>
+            <div class="border-bt"></div>
+        </div>
+
+
+
+
+        <div class="box-row">
+            <% if (typeof products !== 'undefined' && products.length > 0) { %>
+                <% products.forEach(function(item) { %>
+                    <div class="charger">
+                        <div class="image-wrapper">
+                            <img src="/image/Group 100.png" alt="box-charger">
+
+                            <div class="box-img">
+                                <p class="hd">Status <%= item.status %>
+                                </p>
+                                <p class="hd1">Charge Code: <%= item.charge_code %>
+                                </p>
+
+                                <div class="box-icon">
+                                    <img src="/image/icon Charging.png" alt="icon-charging">
+                                    <div class="b2-icon">
+                                        <p class="b2-1">
+                                            <%= item.connector_types %>
+                                        </p>
+                                        <p class="b2-2">(<%= item.description %>)</p>
+                                    </div>
+                                </div>
+
+                                <% if (item.status==='Available' ) { %>
+                                    <button class="book-btn btn-primary" data-id="<%= item._id %>" data-charge_code="<%= item.charge_code %>"
+                                        data-price="<%= item.price %>" id="open-popup">BOOK</button>
+                                <% } else { %>
+                                        <button disabled>BOOKED</button>
+                                        <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+                        <% } else { %>
+                            <p>No charging stations available for booking at the moment</p>
+                            <% } %>
+
+
+
+
+
+
+        </div>
+
+        <!-- Popup add item-->
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close" id="close-popup">&times;</span>
+
+                <div class="content">
+                    <h2>Confirm booking</h2>
+                    <p>Do you want to <span id="productCharge_code"></span> book?</p>
+                    <p>Booking time: <span id="currentDateTime"></span></p>
+                    <button id="confirmBooking">Confirm booking</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $('.book-btn').click(function () {
+                const productCharge_code = $(this).data('charge_code');
+                //const productPrice = $(this).data('price');
+                const productId = $(this).data('id');
+        
+                // กำหนดเวลาปัจจุบัน
+                const now = new Date();
+                const formattedDateTime = now.toLocaleString();
+        
+                // แสดงข้อมูลใน modal
+                $('#productCharge_code').text(productCharge_code);
+                //$('#productPrice').text(productPrice);
+                $('#currentDateTime').text(formattedDateTime);
+                $('#confirmBooking').data('id', productId);
+                
+                //$('#bookingModal').modal('show');
+                
+            });
+
+            $('#confirmBooking').click(function () {
+                const productId = $(this).data('id');
+                const now = new Date();
+                const startDateTime = now.toISOString(); // เวลาจองเริ่มต้น
+                const endDateTime = new Date(now.setMinutes(now.getMinutes() + 30)).toISOString(); // เวลาสิ้นสุดหลัง 30 นาที
+
+
+                $.post('/book', {
+                    productId: productId,
+                    startTime: startDateTime,
+                    endTime: endDateTime
+                }, function (response) {
+                    if (response.success) {
+                        // เปลี่ยนปุ่มเป็น 'ไม่ว่าง' และปิดการใช้งาน
+                        const button = $(`button[data-id="${productId}"]`);
+                        button.removeClass('btn-primary').addClass('btn-secondary').text('BOOKED').prop('disabled', true);
+                        
+                        //$('#bookingModal').modal('hide');
+                    } else {
+                        alert('เกิดข้อผิดพลาดในการจอง: ' + response.message);
+                    }
+                });
+            });
+        });
+
+
+
+
+        //--------------------- popup--------------
+        // เปิด popup เมื่อคลิกที่ปุ่ม
+        document.getElementById("open-popup").onclick = function (event) {
+            event.preventDefault(); // ป้องกันไม่ให้ลิงค์ทำงาน
+            document.getElementById("popup").style.display = "block"; // แสดง popup
+        }
+
+        // ปิด popup เมื่อคลิกที่ปุ่มปิด
+        document.getElementById("close-popup").onclick = function () {
+            document.getElementById("popup").style.display = "none"; // ซ่อน popup
+        }
+
+        // ปิด popup เมื่อคลิกนอกพื้นที่ popup
+        window.onclick = function (event) {
+            const popup = document.getElementById("popup");
+            if (event.target == popup) {
+                popup.style.display = "none"; // ซ่อน popup
+            }
+        }
+
+
+        // Get the button
+        let mybutton = document.getElementById("btn-back");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+   
+
+</body>
+
+</html>

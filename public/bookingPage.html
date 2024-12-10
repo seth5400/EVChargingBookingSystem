@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charging Station</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="./image/logo1.png">
+</head>
+
+<body>
+    <header class="header">
+        <a href="" class="logo">
+            <img src="./image/logo1.png" alt="">
+        </a>
+
+        <input type="checkbox" id="check">
+        <label for="check" class="icons">
+            <i class='bx bx-menu' id="menu-icon"></i>
+            <i class='bx bx-x' id="close-icon"></i>
+        </label>
+
+        <nav class="navbar">
+            <a href="" style="--i:0;">HOME</a>
+            <a href="" style="--i:1;">SERVICE</a>
+            <a href="" style="--i:2;">HISTORY</a>
+            <a href="" style="--i:3;">HELP</a>
+            <a href="" style="--i:4;" id="user">Sign in</a>
+
+        </nav>
+        <div class="dropdown">
+            <a href="" class="user">Sign in</a>
+            <div class="dropdown-content">
+
+                <a href="#">Login</a>
+                <a href="#">Register</a>
+                
+
+            </div>
+        </div>
+
+
+    </header>
+
+    <div class="ctn-booking">
+        <button onclick="topFunction()" id="btn-back" title="Go to top">
+            <img src="./image/arrow.png" alt="">
+        </button>
+        <div class="box-booking">
+            <p>CHARGING STATION</p>
+            <div class="border-bt"></div>
+        </div>
+
+
+        
+
+        <div class="box-row">
+            <div class="charger">
+                <div class="image-wrapper">
+                    <img src="./image/Group 100.png" alt="box-charger">
+
+                    <div class="box-img">
+                        <p class="hd">ChargeCore (120 Kilowatt)</p>
+                        <p class="hd1">Charge Code: 0001</p>
+
+                        <div class="box-icon">
+                            <img src="./image/icon Charging.png" alt="icon-charging">
+                            <div class="b2-icon">
+                                <p class="b2-1">DC CCS COMBO2</p>
+                                <p class="b2-2">(Maximum 120 kW)</p>
+                            </div>
+                        </div>
+
+                        <button href="#" id="open-popup">BOOK</button>
+
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            
+
+
+        </div>
+
+        <!-- Popup add item-->
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close" id="close-popup">&times;</span>
+                
+                <div class="content">
+                    <h2>Confirm booking</h2>
+                    <p>Do you want to book?</p>
+                    <p>Booking time: </p>
+                    <button>Confirm booking</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //--------------------- ADD ITEM--------------
+        // เปิด popup เมื่อคลิกที่ปุ่ม
+        document.getElementById("open-popup").onclick = function (event) {
+            event.preventDefault(); // ป้องกันไม่ให้ลิงค์ทำงาน
+            document.getElementById("popup").style.display = "block"; // แสดง popup
+        }
+
+        // ปิด popup เมื่อคลิกที่ปุ่มปิด
+        document.getElementById("close-popup").onclick = function () {
+            document.getElementById("popup").style.display = "none"; // ซ่อน popup
+        }
+
+        // ปิด popup เมื่อคลิกนอกพื้นที่ popup
+        window.onclick = function (event) {
+            const popup = document.getElementById("popup");
+            if (event.target == popup) {
+                popup.style.display = "none"; // ซ่อน popup
+            }
+        }
+
+
+        // Get the button
+        let mybutton = document.getElementById("btn-back");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+</body>
+
+</html>

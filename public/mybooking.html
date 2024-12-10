@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Booking</title>
+    
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <link rel="icon" type="image/png" href="/image/logo1.png">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="" class="logo">
+            <img src="/image/logo1.png" alt="">
+        </a>
+
+        <input type="checkbox" id="check">
+        <label for="check" class="icons">
+            <i class='bx bx-menu' id="menu-icon"></i>
+            <i class='bx bx-x' id="close-icon"></i>
+        </label>
+
+        <nav class="navbar">
+            <a href="" style="--i:0;">HOME</a>
+            <a href="" style="--i:1;">SERVICE</a>
+            <a href="" style="--i:2;">HISTORY</a>
+            <a href="" style="--i:3;">HELP</a>
+            <a href="" style="--i:4;" id="user">Sign in</a>
+
+        </nav>
+        <a href="" class="user">Sign in</a>
+
+
+    </header>
+
+    <div class="ctn-mybooking">
+        <button onclick="topFunction()" id="btn-back" title="Go to top">
+            <img src="/image/arrow.png" alt="">
+        </button>
+        <div class="box-booking">
+            <p>MY BOOKING</p>
+            <div class="border-bt"></div>
+        </div>
+
+        <!-- Popup edit -->
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <span class="close" id="close-popup1">&times;</span>
+                <h2>Enter PIN Code</h2>
+                <div class="content-pop">
+                    <div class="login-content">
+
+                        <form action="">
+
+
+                            <div class="input-div one">
+                                <div class="i">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="div">
+                                    <h5>CHARGER CODE</h5>
+                                    <input type="password" class="input">
+                                </div>
+                            </div>
+                            
+                            
+
+
+                            <input type="submit" class="btn" value="ENTER">
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+
+        <div class="show">
+            <!-- <h2>LOCATION</h2> -->
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.9053877469423!2d102.81278687598513!3d16.480327728299738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31228a9ac7bb0843%3A0x335834b7f77ca0b8!2z4Lih4Lit4LmB4LiU4LiHIOC5gOC4nuC4peC4qg!5e0!3m2!1sth!2sth!4v1696428038753!5m2!1sth!2sth"
+                width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+            <div class="b">
+                <div class="box">
+                    <div class="box-1">
+                        <div class="p1">
+                            <div class="cc"></div>
+                            <p class="">CUSTOMER - Jonathan</p>
+                        </div>
+
+                        <p>Time</p>
+                        <p class="p2">16/10/2567</p>
+
+                        <div class="p3">
+                            <div class="p3-1">
+                                <p>Charger Code</p>
+                                <p>0001</p>
+                            </div>
+                            <div class="p3-2">
+                                <p>status</p>
+                                <p>Booked</p>
+                            </div>
+ 
+                        </div>
+                        <p class="p4">Remaining Time: 29 min 40 sec</p>
+                    </div>
+                    <div class="box-2">
+                        <img src="/image/logo1.png" alt="logo">
+                        <div class="pin">
+                            <p>your pin code</p>
+                            <p>579882</p>
+                        </div>
+                        
+                        <button class="b1" id="open-popup">CHECK IN</button>
+                        <button class="b2">CANCEL</button>
+                    </div>
+                </div>
+
+                
+            </div>
+
+
+
+        </div>
+
+
+    </div>
+
+    <script>
+
+        const inputs = document.querySelectorAll(".input");
+
+
+        function addcl() {
+            let parent = this.parentNode.parentNode;
+            parent.classList.add("focus");
+        }
+
+        function remcl() {
+            let parent = this.parentNode.parentNode;
+            if (this.value == "") {
+                parent.classList.remove("focus");
+            }
+        }
+
+
+        inputs.forEach(input => {
+            input.addEventListener("focus", addcl);
+            input.addEventListener("blur", remcl);
+        });
+
+        // Get the button
+        let mybutton = document.getElementById("btn-back");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+
+        //--------------------- popup--------------
+        // เปิด popup เมื่อคลิกที่ปุ่ม
+        document.getElementById("open-popup").onclick = function (event) {
+            event.preventDefault(); // ป้องกันไม่ให้ลิงค์ทำงาน
+            document.getElementById("popup").style.display = "block"; // แสดง popup
+        }
+
+        // ปิด popup เมื่อคลิกที่ปุ่มปิด
+        document.getElementById("close-popup").onclick = function () {
+            document.getElementById("popup").style.display = "none"; // ซ่อน popup
+        }
+
+        // ปิด popup เมื่อคลิกนอกพื้นที่ popup
+        window.onclick = function (event) {
+            const popup = document.getElementById("popup");
+            if (event.target == popup) {
+                popup.style.display = "none"; // ซ่อน popup
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report</title>
+    <link rel="icon" type="image/png" href="/image/logo1.png">
+    <link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+    <%- include('nav', { user: user }) %>
+
+        <div class="ctn-report">
+            <button onclick="topFunction()" id="btn-back" title="Go to top">
+                <img src="/image/arrow.png" alt="">
+            </button>
+
+
+            <div class="box-manage">
+                <p>Overall System Statistics</p>
+                <div class="border-bt"></div>
+            </div>
+            <div class="box-report">
+                <div class="box-1 box">
+                    <p>Total Users</p>
+                    <p>
+                        <%= totalUsers %>
+                    </p>
+                </div>
+                <div class="box-2 box">
+                    <p>Total Bookings</p>
+                    <p>
+                        <%= totalBookings %>
+                    </p>
+                </div>
+                <div class="box-3 box">
+                    <p>Total Stations</p>
+                    <p>
+                        <%= totalStations %>
+                    </p>
+                </div>
+            </div>
+
+            <div class="box-manage">
+                <p>Frequent Users</p>
+                <div class="border-bt"></div>
+            </div>
+
+
+            <div class="table_manage">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Usage Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% frequentUsers.forEach(function(user) { %>
+                            <tr>
+                                <th>
+                                    <%= user.username %>
+                                </th>
+                                <th>
+                                    <%= user.usageCount %>
+                                </th>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+
+
+
+
+            </div>
+
+            <div class="box-manage">
+                <p>Most Used Charging Stations</p>
+                <div class="border-bt"></div>
+            </div>
+
+
+            <div class="table_manage">
+
+                <table class="last">
+                    <thead>
+                        <tr>
+                            <th>Charge Code</th>
+                            <th>Usage Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% popularStations.forEach(function(station) { %>
+                            <tr>
+                                <th>
+                                    <%= station.charge_code %>
+                                </th>
+                                <th>
+                                    <%= station.usageCount %>
+                                </th>
+                            </tr>
+                            <% }) %>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+        <script>
+            // Get the button
+            let mybutton = document.getElementById("btn-back");
+
+            // When the user scrolls down 20px from the top of the document, show the button
+            window.onscroll = function () { scrollFunction() };
+
+            function scrollFunction() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    mybutton.style.display = "block";
+                } else {
+                    mybutton.style.display = "none";
+                }
+            }
+
+            // When the user clicks on the button, scroll to the top of the document
+            function topFunction() {
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+            }
+        </script>
+        
+</body>
+
+</html>

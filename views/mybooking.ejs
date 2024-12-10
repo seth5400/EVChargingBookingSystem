@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>My Booking</title>
+
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'
+            rel='stylesheet'>
+        <link rel="stylesheet" href="/css/style.css">
+
+        <link rel="icon" type="image/png" href="/image/logo1.png">
+    </head>
+
+    <body>
+
+        <%- include('nav') %>
+        <div class="ctn-mybooking">
+            <button onclick="topFunction()" id="btn-back" title="Go to top">
+                <img src="/image/arrow.png" alt>
+            </button>
+            <div class="box-booking">
+                <p>MY BOOKING</p>
+                <div class="border-bt"></div>
+            </div>
+
+            <!-- Popup pin -->
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <span class="close" id="close-popup">&times;</span>
+                    <h2>Enter PIN Code</h2>
+                    <div class="content-pop">
+                        <div class="login-content">
+                            <form action id="pinForm">
+                                <div class="input-div one">
+                                    <div class="i">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="div">
+                                        <h5>CHARGER CODE</h5>
+                                        <input type="hidden" id="bookingId"
+                                            name="bookingId">
+                                        <input type="password" class="input"
+                                            id="pinInput" name="pin" required>
+                                        <div id="pinError" class="text-danger"
+                                            style="display: none;color:red;">
+                                            Incorrect PIN code
+                                        </div>
+                                    </div>
+                                </div>
+                                <input type="submit" class="btn" value="ENTER"
+                                    id="submitPin">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="show">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3825.9053877469423!2d102.81278687598513!3d16.480327728299738!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31228a9ac7bb0843%3A0x335834b7f77ca0b8!2z4Lih4Lit4LmB4LiU4LiHIOC5gOC4nuC4peC4qg!5e0!3m2!1sth!2sth!4v1696428038753!5m2!1sth!2sth"
+                    width="100%" height="250" style="border:0;" allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+                <div class="b">
+                    <% if (bookings.length> 0) { %>
+                    <% bookings.forEach(function(booking) { %>
+                    <div class="box">
+                        <div class="box-1">
+                            <div class="p1">
+                                <div class="cc"></div>
+                                <p>CUSTOMER - <%= user.username %></p>
+                            </div>
+
+                            <p>Time</p>
+                            <p class="p2">
+                                <%= booking.createdAt.toLocaleDateString() %>
+                            </p>
+
+                            <div class="p3">
+                                <div class="p3-1">
+                                    <p class="pp">ChargerCode</p>
+                                    <p>
+                                        <% if (booking.productId) { %>
+                                        <%= booking.productId.charge_code %>
+                                        <% } else { %>
+                                        <span class="text-danger">Deleted</span>
+                                        <% } %>
+                                    </p>
+                                </div>
+                                <div class="p3-2">
+                                    <p>Status</p>
+                                    <p><%= booking.status %></p>
+                                </div>
+                            </div>
+
+                            <% if (booking.status === 'Booked') { %>
+                            <p class="p4">Remaining Time: <span
+                                    id="timeRemaining_<%= booking._id %>"></span></p>
+                            <script>
+                                            const expirationTime = new Date("<%= booking.expirationTime %>");
+                                            const bookingStatus = "<%= booking.status %>"; // ดึงสถานะการจองมาใช้ใน JavaScript
+                                    
+                                            function updateTimeRemaining() {
+            const timeRemainingElem = document.getElementById("timeRemaining_<%= booking._id %>");
+            const statusElem = document.querySelector("#status_<%= booking._id %>");
+            const remainingTime = expirationTime - new Date();
+        
+            if (remainingTime > 0) {
+                const minutes = Math.floor(remainingTime / 60000);
+                const seconds = Math.floor((remainingTime % 60000) / 1000);
+                timeRemainingElem.innerText = `${minutes} min ${seconds} sec`;
+            } else {
+                timeRemainingElem.innerText = 'Booking time has expired';
+        
+                // ซ่อนปุ่มแบบเรียลไทม์
+                const checkInBtn = document.querySelector('.open-popup[data-id="<%= booking._id %>"]');
+                const cancelBtn = document.querySelector('.cancel-btn[data-id="<%= booking._id %>"]');
+                const pinCodeElem = document.querySelector('.pin');
+        
+                if (checkInBtn) checkInBtn.style.display = 'none';
+                if (cancelBtn) cancelBtn.style.display = 'none';
+                if (pinCodeElem) pinCodeElem.style.display = 'none';
+        
+                // อัปเดตสถานะใน UI ให้เป็น "Canceled"
+                if (statusElem) {
+                    statusElem.innerText = 'Canceled';
+                }
+        
+                // เรียกใช้ API เพื่ออัปเดตสถานะการจองในระบบ
+                $.post('/update-status', { bookingId: '<%= booking._id %>' }, function (response) {
+                    if (!response.success) {
+                        alert('Error updating status');
+                    }
+                });
+        
+                clearInterval(intervalId); // หยุดการอัปเดตเมื่อหมดเวลา
+            }
+        }
+        
+        
+        const intervalId = setInterval(updateTimeRemaining, 1000); // ตรวจสอบทุกวินาที
+        
+                                        </script>
+                            <% } %>
+                        </div>
+                        <div class="box-2">
+                            <img src="/image/logo1.png" alt="logo">
+                            <% if (booking.status === 'Booked' &&
+                            !booking.arrived) { %>
+                            <div class="pin">
+                                <p>Your pin code</p>
+                                <p><%= booking.pin %></p>
+                            </div>
+                            <% } %>
+
+                            <% const currentTime = new Date(); %>
+                            <% const bookingTimeStart = new
+                            Date(booking.startTime); %>
+                            <% const bookingTimeEnd = new Date(booking.endTime);
+                            %>
+
+                            <% if (booking.status === 'Booked' &&
+                            !booking.arrived &&
+                            currentTime >= bookingTimeStart && currentTime <=
+                            bookingTimeEnd) { %>
+                            <button class="b1 open-popup"
+                                data-id="<%= booking._id %>">CHECK IN</button>
+                            <% } else if ((currentTime < bookingTimeStart ||
+                            currentTime > bookingTimeEnd) && booking.status ===
+                            'Booked') { %>
+                            <p class="text-danger">Time out of booking!</p>
+                            <% } %>
+
+                            <% if (booking.status === 'Booked' &&
+                            !booking.arrived) { %>
+                            <button class="b2 cancel-btn"
+                                data-id="<%= booking._id %>">CANCEL</button>
+                            <% } %>
+
+                            <% if (booking.status === 'In Use') { %>
+                            <button class="b3 complete-btn"
+                                data-id="<%= booking._id %>">Complete
+                                Usage</button>
+                            <% } %>
+                        </div>
+                    </div>
+                    <% }) %>
+                    <% } else { %>
+                    <p>You have no bookings yet</p>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popup feedback -->
+        <div class="popup-feedback">
+            <div id="feedback-popup" class="popup">
+                <div class="popup-content">
+                    <span class="close-popup" id="close-popup">&times;</span>
+                    <h2>Submit Feedback</h2>
+                    <form id="feedback-form" action="/feedback" method="POST">
+                        <label for="stationId">Select Charging Station:</label>
+                        <select name="stationId" id="stationId" required>
+                            <% products.forEach(product => { %>
+                            <option value="<%= product._id %>"><%=
+                                product.charge_code %></option>
+                            <% }) %>
+                        </select>
+                        <br>
+                        <label for="issueType">Select Issue:</label>
+                        <select name="issueType" id="issueType" required>
+                            <option value="Station Faulty">Station
+                                Faulty</option>
+                            <option value="Charging Issue">Charging
+                                Issue</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <br>
+                        <label for="message">Describe the Issue:</label>
+                        <textarea name="message" id="message" rows="5"
+                            required></textarea>
+                        <br>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery Script -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+        $(document).ready(function () {
+            // ฟังก์ชันสำหรับยกเลิกการจอง
+            $('.cancel-btn').click(function () {
+                var bookingId = $(this).data('id');
+                if (confirm('Are you sure you want to cancel this booking?')) {
+                    $.post('/cancel-booking', { bookingId: bookingId }, function (response) {
+                        if (response.success) {
+                            alert('Booking cancellation successful');
+                            location.reload();
+                        } else {
+                            alert('An error occurred while canceling the booking: ' + response.message);
+                        }
+                    });
+                }
+            });
+
+            // เมื่อคลิกปุ่ม " ฉันมาถึงแล้ว"
+            $('.open-popup').click(function () {
+                var bookingId = $(this).data('id');
+                $('#bookingId').val(bookingId);
+                $('#pinInput').val('');
+                $('#pinError').hide();
+                document.getElementById("popup").style.display = "block";  // แสดง popup
+            });
+
+            // ฟังก์ชันการยืนยัน PIN
+            $('#submitPin').click(function (e) {
+                e.preventDefault();  // ป้องกันการ submit แบบปกติ
+                var pin = $('#pinInput').val();
+                $.ajax({
+                    url: '/confirm-arrival',
+                    type: 'POST',
+                    data: {
+                        bookingId: $('#bookingId').val(),
+                        pin: pin
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            alert('Arrival confirmation successful');
+                            $('#popup').hide();
+                            location.reload();
+                        } else {
+                            $('#pinError').show();
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred, please try again');
+                    }
+                });
+            });
+
+            // ฟังก์ชันสำหรับการสิ้นสุดการใช้งาน
+            $('.complete-btn').click(function () {
+                var bookingId = $(this).data('id');
+                if (confirm('Are you sure you want to complete this usage?')) {
+                    $.post('/complete-booking', { bookingId: bookingId }, function (response) {
+                        if (response.success) {
+                            alert('Usage completed successfully');
+                            location.reload();
+                        } else {
+                            alert('An error occurred while completing the usage: ' + response.message);
+                        }
+                    });
+                }
+            });
+
+            // เปิด popup เมื่อคลิกปุ่ม feedback
+            $('#feedback-link').click(function () {
+                $('#feedback-popup').css('display', 'flex');
+            });
+
+            // ปิด popup เมื่อคลิกที่ปุ่มปิด
+            $('#close-popup').click(function () {
+                $('#feedback-popup').css('display', 'none');
+            });
+
+            // ปิด popup เมื่อคลิกนอก popup
+            $(window).click(function (event) {
+                if (event.target.id === 'feedback-popup') {
+                    $('#feedback-popup').css('display', 'none');
+                }
+            });
+
+            // ส่งฟอร์ม feedback ผ่าน AJAX
+            $('#feedback-form').submit(function (event) {
+                event.preventDefault(); // ป้องกันการ submit แบบธรรมดา
+                const formData = $(this).serialize(); // เก็บข้อมูลฟอร์ม
+
+                $.post('/feedback', formData, function (response) {
+                    if (response.success) {
+                        alert('Feedback submitted successfully');
+                        $('#feedback-popup').css('display', 'none');
+                    } else {
+                        alert('Failed to submit feedback');
+                    }
+                });
+            });
+        });
+
+        // Function for top button
+        let mybutton = document.getElementById("btn-back");
+
+        window.onscroll = function () {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        };
+
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        // Function to show/hide the popup
+        document.getElementById("close-popup").onclick = function () {
+            document.getElementById("popup").style.display = "none";
+        };
+
+        window.onclick = function (event) {
+            const popup = document.getElementById("popup");
+            if (event.target === popup) {
+                popup.style.display = "none";
+            }
+        };
+
+        const inputs = document.querySelectorAll(".input");
+
+        function addcl() {
+            let parent = this.parentNode.parentNode;
+            parent.classList.add("focus");
+        }
+
+        function remcl() {
+            let parent = this.parentNode.parentNode;
+            if (this.value == "") {
+                parent.classList.remove("focus");
+            }
+        }
+
+        inputs.forEach(input => {
+            input.addEventListener("focus", addcl);
+            input.addEventListener("blur", remcl);
+        });
+    </script>
+    
+    </body>
+    
+
+</html>

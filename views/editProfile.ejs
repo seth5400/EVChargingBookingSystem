@@ -1,0 +1,335 @@
+!
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit My Profile</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" type="image/png" href="/image/logo1.png">
+    <style>
+        .content-pop {
+
+
+            .login-content {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                text-align: center;
+                margin-top: 1.8rem;
+            }
+
+
+
+            form {
+                width: 100%;
+            }
+
+            .login-content img {
+                height: 100px;
+            }
+
+            .login-content h2 {
+                margin: 15px 0;
+                color: #333;
+                text-transform: uppercase;
+                font-size: 2.9rem;
+            }
+
+            .login-content .input-div {
+                position: relative;
+                display: grid;
+                grid-template-columns: 7% 93%;
+                margin: 25px 0;
+                padding: 5px 0;
+                border-bottom: 2px solid #d9d9d9;
+            }
+
+            .login-content .input-div.one {
+                margin-top: 0;
+            }
+
+            .i {
+                color: #d9d9d9;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .i i {
+                transition: .3s;
+            }
+
+            .input-div>div {
+                position: relative;
+                height: 45px;
+            }
+
+            .input-div>div>h5 {
+                position: absolute;
+                left: -30px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #999;
+                font-size: 18px;
+                transition: .3s;
+            }
+
+            .input-div:before,
+            .input-div:after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                width: 0%;
+                height: 2px;
+                background-color: #80B334;
+                transition: .4s;
+            }
+
+            .input-div:before {
+                right: 50%;
+            }
+
+            .input-div:after {
+                left: 50%;
+            }
+
+            .input-div.focus:before,
+            .input-div.focus:after {
+                width: 50%;
+            }
+
+            .input-div.focus>div>h5 {
+                top: -5px;
+                font-size: 15px;
+            }
+
+            .input-div.focus>.i>i {
+                color: #80B334;
+            }
+
+            .input-div>div>input {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                border: none;
+                outline: none;
+                background: none;
+                padding: 0.5rem 0.7rem;
+                font-size: 1.2rem;
+                color: #555;
+                font-family: 'poppins', sans-serif;
+            }
+
+            .input-div.pass {
+                margin-bottom: 4px;
+            }
+
+            a {
+                display: block;
+                text-align: right;
+                text-decoration: none;
+                color: #999;
+                font-size: 0.9rem;
+                transition: .3s;
+            }
+
+            a:hover {
+                color: #80B334;
+            }
+
+            .btn {
+                display: block;
+                width: 100%;
+                height: 50px;
+                border-radius: 25px;
+                outline: none;
+                border: none;
+                background-color: #80B334;
+                background-size: 200%;
+                font-size: 1.2rem;
+                color: #fff;
+                font-family: 'Poppins', sans-serif;
+                text-transform: uppercase;
+                /*margin: 1rem 0;*/
+                margin-top: 1.5rem;
+                cursor: pointer;
+                transition: .5s;
+            }
+
+            .btn:hover {
+                background-position: right;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    
+    <%- include('nav', { user: user }) %>
+
+    <div class="ctn-profile">
+        <button onclick="topFunction()" id="btn-back" title="Go to top">
+            <img src="/image/arrow.png" alt="">
+        </button>
+        <div class="box-profile">
+            <p>EDIT MY PROFILE</p>
+            <div class="border-bt"></div>
+        </div>
+        <div class="user-pro">
+            <div class="img">
+                <img src="/image/logo1.png" alt="logo">
+            </div>
+            
+            <div class="form-user">
+                <form action="/edit-profile" method="POST">
+                    <div class="form-groop">
+                        <label for="username">NAME</label>
+                        <input type="text" class="" id="username" name="username" value="<%= user.username %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">NEW PASSWORD</label>
+                        <input type="password" class="" id="password" name="password" placeholder="Enter new password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">CONFIRM NEW PASSWORD</label>
+                        <input type="password" class="" id="confirmPassword" name="confirmPassword" placeholder="Confirm new password">
+                    </div>
+                    <div class="btn1">
+                        <button type="SUBMIT" class="">EDIT</button>
+                        <a href="/profile" class="">CANCEL</a>
+                    </div>
+                    
+                </form>
+            </div>
+
+        </div>
+
+        
+
+
+        
+
+
+    </div>
+
+    <div class="popup-feedback">
+        <div id="feedback-popup" class="popup">
+            <div class="popup-content">
+                <span class="close-popup" id="close-popup">&times;</span>
+                <h2>Submit Feedback</h2>
+                <form id="feedback-form" action="/feedback" method="POST">
+                    <label for="stationId">Select Charging Station:</label>
+                    <select name="stationId" id="stationId" required>
+                        <% products.forEach(product => { %>
+                            <option value="<%= product._id %>"><%= product.charge_code %></option>
+                        <% }) %>
+                    </select>
+                    <br>
+                    <label for="issueType">Select Issue:</label>
+                    <select name="issueType" id="issueType" required>
+                        <option value="Station Faulty">Station Faulty</option>
+                        <option value="Charging Issue">Charging Issue</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <br>
+                    <label for="message">Describe the Issue:</label>
+                    <textarea name="message" id="message" rows="5" required></textarea>
+                    <br>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery Script -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // เปิด popup เมื่อคลิกปุ่ม feedback
+            $('#feedback-link').click(function () {
+                $('#feedback-popup').css('display', 'flex');
+            });
+    
+            // ปิด popup เมื่อคลิกที่ปุ่มปิด
+            $('#close-popup').click(function () {
+                $('#feedback-popup').css('display', 'none');
+            });
+    
+            // ปิด popup เมื่อคลิกนอก popup
+            $(window).click(function (event) {
+                if (event.target.id === 'feedback-popup') {
+                    $('#feedback-popup').css('display', 'none');
+                }
+            });
+    
+            // ส่งฟอร์ม feedback ผ่าน AJAX
+            $('#feedback-form').submit(function (event) {
+                event.preventDefault(); // ป้องกันการ submit แบบธรรมดา
+                const formData = $(this).serialize(); // เก็บข้อมูลฟอร์ม
+    
+                $.post('/feedback', formData, function (response) {
+                    if (response.success) {
+                        alert('Feedback submitted successfully');
+                        $('#feedback-popup').css('display', 'none');
+                    } else {
+                        alert('Failed to submit feedback');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+
+        const inputs = document.querySelectorAll(".input");
+
+
+        function addcl() {
+            let parent = this.parentNode.parentNode;
+            parent.classList.add("focus");
+        }
+
+        function remcl() {
+            let parent = this.parentNode.parentNode;
+            if (this.value == "") {
+                parent.classList.remove("focus");
+            }
+        }
+
+
+        inputs.forEach(input => {
+            input.addEventListener("focus", addcl);
+            input.addEventListener("blur", remcl);
+        });
+
+        // Get the button
+        let mybutton = document.getElementById("btn-back");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+
+        
+    </script>
+    
+</body>
+
+</html>
