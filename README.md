@@ -21,3 +21,8 @@ EVChargingBookingSystem is a web application designed for booking electric vehic
    ```bash
    git clone https://github.com/your-username/EVChargingBookingSystem.git
 
+2. Navigate to the project directory
+   ```bash
+   cd EVChargingBookingSystem
+
+
