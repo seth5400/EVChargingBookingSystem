@@ -34,3 +34,13 @@ EVChargingBookingSystem is a web application designed for booking electric vehic
    npm start
 
 ## Folder Structure
+- **app.js**: Main application file.
+- **models**: Database schemas and models.
+- **routes**: API endpoints and application routes.
+- **views**: EJS templates for rendering pages.
+- **public**: Static files (CSS, JavaScript, images).
+
+## Future Improvements
+- **Add real-time notifications for booking updates.**
+- **Support for payment gateway integration.**
+- **Enhanced mobile responsiveness.**
