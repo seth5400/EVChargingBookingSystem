@@ -25,4 +25,10 @@ EVChargingBookingSystem is a web application designed for booking electric vehic
    ```bash
    cd EVChargingBookingSystem
 
+3. Install dependencies:
+   ```bash
+   npm install
 
+4. Start the application
+   ```bash
+   npm start
