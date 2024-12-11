@@ -32,3 +32,5 @@ EVChargingBookingSystem is a web application designed for booking electric vehic
 4. Start the application
    ```bash
    npm start
+
+## Folder Structure
