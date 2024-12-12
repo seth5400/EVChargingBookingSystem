@@ -13,7 +13,7 @@ EVChargingBookingSystem is a web application designed for booking electric vehic
 ## Technologies Used
 - **Backend**: Node.js, Express.js
 - **Frontend**: EJS templates, CSS
-- **Database**: MongoDB (or other supported databases)
+- **Database**: MongoDB
 - **Other Tools**: npm for dependency management
 
 ## Installation
