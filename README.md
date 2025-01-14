@@ -3,6 +3,9 @@
 ## Overview
 EVChargingBookingSystem is a web application designed for booking electric vehicle (EV) charging stations. It provides an intuitive interface for users to locate, book, and manage charging sessions at their convenience.
 
+## About This Project
+This project was collaboratively developed by me and my friend to create an EV Charging Booking System.
+
 ## Features
 - **User Authentication**: Register and log in to manage bookings.
 - **Station Locator**: Search for available charging stations by location.
